@@ -1,0 +1,91 @@
+@border-color-default: #1698d9;
+@border-outer-radius: 10px;
+@border-inner-radius: 7px;
+@border-width: 4px;
+
+// Mixins:
+.floatleft {
+	display: block;
+	float: left
+}
+
+html {
+  background: url(../images/background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+	display: table;
+	width:100%;
+	height:100%;
+}
+
+.container {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* Product item */
+.product-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 320px;
+  height: 480px;
+  margin-right: 80px;
+  text-align: left;
+}
+.product-container:last-child {
+  margin-right: 0px;
+}
+.product-container .border {
+  position:absolute;    
+  top: 44px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: @border-color-default;
+  border-radius: 0 0 @border-outer-radius @border-outer-radius;
+}
+.product-container .border:before {
+  position: absolute; 
+  top: -44px;
+  left: 0;
+  right: 0;
+  height: 0px;
+  border-bottom: 44px solid @border-color-default;
+  border-left: 44px solid transparent;
+  border-radius: 0 @border-outer-radius 0 0;
+  content: "";
+}
+.product-container .background {
+  position:absolute;
+  top: 46px;
+  left: @border-width;
+  right: @border-width;
+  bottom: @border-width;
+  background-color: #fff;
+  border-radius: 0 0 @border-inner-radius @border-inner-radius;
+}
+.product-container .background:before {
+  position: absolute;
+  top: -42px;
+  left: 0;
+  right: 0;
+  height: 0px;
+  border-bottom: 42px solid #fff;
+  border-left: 42px solid transparent;
+  border-radius: 0 @border-inner-radius 0 0;
+  content: "";
+}
+.product-container .body {
+    position:relative;
+    z-index: 1;
+    margin: 30px;
+}

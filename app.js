@@ -1,4 +1,5 @@
 var express = require('express');
+var http = require("http");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,9 +10,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var port = process.env.PORT || 6060
+var server = http.createServer(app)
+server.listen(port)
+console.log("http server listening on %d", port)
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src/templates'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
