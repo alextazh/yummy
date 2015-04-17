@@ -1,58 +1,41 @@
 var gulp = require('gulp');
 		gutil = require('gulp-util');
-		coffee = require('gulp-coffee');
-		concat = require('gulp-concat');
-		connect = require('gulp-connect');
 		less = require('gulp-less');
+		uglify = require('gulp-uglify');
+		minifyCSS = require('gulp-minify-css');
 
 // Specify source files
-var coffeeSources = ['src/coffee/*.coffee'];
 var jsSources = ['src/js/*.js'];
 var lessSources = ['src/less/*.less'];
-var tmplSources = ['src/templates/*.jade'];
+var cssSources = ['src/css/*.css']
 
+// Convert LESS to CSS
 gulp.task('less', function () {
   gulp.src(lessSources)
   	.pipe(less())
+    .pipe(gulp.dest('src/css'))
+});
+
+// Minify js files
+gulp.task('minify-js', function() {
+  gulp.src(jsSources)
+    .pipe(uglify())
+    .pipe(gulp.dest('public/js'));
+});
+
+// Minify css files
+gulp.task('minify-css', function() {
+  gulp.src(cssSources)
+    .pipe(minifyCSS())
     .pipe(gulp.dest('public/css'))
-});
-
-// Convert all coffeescripts to javascripts
-gulp.task('coffee', function() {
-	gulp.src(coffeeSources)
-		.pipe(coffee({bare: true}).on('error', gutil.log))
-		.pipe(gulp.dest('src/js'))
-});
-
-// Make single js file from all js files
-gulp.task('js', function() {
-	gulp.src(jsSources)
-		.pipe(concat('script.js'))
-		.pipe(gulp.dest('public/js'))
-		.pipe(connect.reload())
-});
-
-// Reload when templates change
-gulp.task('tmpl', function() {
-	gulp.src(tmplSources)
-		.pipe(connect.reload())
-});
-
-// Set up live reload
-gulp.task('connect', function() {
-	connect.server ({
-		root: 'builds/development/',
-		livereload: true
-	})
 });
 
 // Watchers
 gulp.task('watch', function() {
-	gulp.watch(coffeeSources, ['coffee']);
-	gulp.watch(jsSources, ['js']);
+	gulp.watch(jsSources, ['jsmin']);
 	gulp.watch(lessSources, ['less']);
-	gulp.watch(tmplSources, ['tmpl']);
+	gulp.watch(cssSources, ['minify-css']);
 });
 
 // Put all tasks into default task
-gulp.task('default', ['coffee', 'js', 'less', 'tmpl', 'connect', 'watch']);
+gulp.task('default', ['less', 'minify-js', 'minify-css', 'watch']);
