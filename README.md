@@ -2,7 +2,7 @@
 A store-front example. Built with node.js, gulp.js, Jade & LESS
 
 ## Interact with product items
-Written with css hover and with jquery, the product items have 4 states: default, default-hover, selected, selected-mouseleave.
+Written with css hover and with jquery, the product items have 5 states: default, default-hover, selected, selected-mouseleave. And there is a disabled state.
 
 ## Structure
 The source files are in src folder. The files served to client are in public folder. Automation tasks are in gulpfile.js. Gulpfile.js takes care of processing LESS into CSS, and minifying CSS and JS.
